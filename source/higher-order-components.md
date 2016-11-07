@@ -113,11 +113,15 @@ const MyComponentWithUpvote = graphql(Upvote, {
 
 <h2 name='compose'>compose</h2>
 
-`react-apollo` exports a `compose` function. Adopting the following pattern allows you to reduce the number of reassignments you're doing every time you wrap your component with `graphql` and often `connect` from `react-redux`. 
+`react-apollo` exports a `compose` function. Adopting the following pattern allows you to reduce the number of reassignments you're doing every time you wrap your component with `graphql` and often `connect` from `react-redux`. Remember that the order in which you pass arguments to the `compose` function matters - the results of the rightmost function will be passed to the function on the left and so on. 
 
 ```js
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
+
+const mapStateToProps = (state, ownProps) => {
+  // Query and mutation props can be accessed in `ownProps`
+}
 
 export default compose(
   graphql(query, queryOptions),
@@ -125,5 +129,4 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps)
 )(Component);
 ```
-
 
